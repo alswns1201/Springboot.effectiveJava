@@ -1,2 +1,3 @@
-# Springboot.effectiveJava
-인프런 강의 - 이펙티프 자바 및 SpringBoot 정리.
+# Springboot
+-스프링부트와 AWS로 혼자 구현하는 웹 서비스 책 참고.
+
