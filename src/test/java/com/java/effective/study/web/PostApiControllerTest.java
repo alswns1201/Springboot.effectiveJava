@@ -75,18 +75,27 @@ public class PostApiControllerTest {
 
         Long update_id = data.getId();
         String update_title = "반영타이틀";
-        String update_content = "반영컨텐츠";
+        String update_content ="반영컨텐츠";
 
 
         PostsUpdateResponseDto updateDto = PostsUpdateResponseDto.builder().title(update_title).content(update_content).build();
-        String url ="http:/localhost:"+port+"api/v1/posts/"+update_id;
+
+        String url ="http://localhost:";
+        url = url+port+"/api/v1/posts/"+update_id;
+
         HttpEntity<PostsUpdateResponseDto> requestEntity = new HttpEntity<>(updateDto);
 
         //when
-
-
+        ResponseEntity<Long> responseEntity = restTemplate.exchange(url,HttpMethod.PUT,requestEntity,Long.class);
 
         //then
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+//        assertThat(responseEntity.getBody()).isGreaterThan(0L);
+
+        List<Posts> all = postsRepository.findAll();
+        assertThat(all.get(0).getTitle()).isEqualTo(update_title);
+
+
 
 
     }

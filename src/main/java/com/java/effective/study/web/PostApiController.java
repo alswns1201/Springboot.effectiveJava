@@ -25,8 +25,10 @@ public class PostApiController {
     public PostsResponseDto findById(@PathVariable Long id) {return postService.findById(id);}
 
     //수정
-    @PutMapping("/api/vi/posts/{id}")
-    public Long update(@PathVariable Long id , @RequestBody PostsUpdateResponseDto dto){return postService.update(id,dto);}
+    @PutMapping ("/api/vi/posts/{id}")
+    public Long update(@PathVariable Long id , @RequestBody PostsUpdateResponseDto dto){
+        return postService.update(id,dto);
+    }
 
 
 
