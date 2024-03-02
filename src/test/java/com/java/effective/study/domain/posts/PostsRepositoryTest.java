@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import static org.assertj.core.api.Assertions.*; // static을 쓰면 바로 assertThat처럼 사용 가능.
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @SpringBootTest
@@ -41,6 +42,23 @@ class PostsRepositoryTest {
         assertThat(post.getContent()).isEqualTo(content);
 
 
+    }
+
+
+    @Test
+    public void Auditing테스트(){
+        //given
+        LocalDateTime now = LocalDateTime.of(2019,6,4,00,0,0);
+        repository.save(Posts.builder().title("title").content("content").author("author").build());
+
+        //when : 저장된걸 가지고 왔을떄
+        List<Posts> postsList = repository.findAll();
+
+        //then : 저장 날짜가 들어가 있는가 .
+        Posts posts = postsList.get(0);
+        System.out.println(posts.getCreateDate()+" "+ posts.getModifiedDate());
+        assertThat(posts.getCreateDate()).isAfter(now);
+        assertThat(posts.getModifiedDate()).isAfter(now);
     }
 
 
