@@ -4,11 +4,15 @@ package com.java.effective.study.service.posts;
 import com.java.effective.study.domain.posts.Posts;
 import com.java.effective.study.domain.posts.PostsRepository;
 import com.java.effective.study.web.dto.PostSaveRequestDto;
+import com.java.effective.study.web.dto.PostsListResponseDto;
 import com.java.effective.study.web.dto.PostsResponseDto;
 import com.java.effective.study.web.dto.PostsUpdateResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -35,7 +39,17 @@ public class PostService {
         return id;
     }
 
+    @Transactional(readOnly = true)
+    public List<PostsListResponseDto> findAllDesc(){
+        return postsRepository.findAllDesc().stream().map(PostsListResponseDto::new).collect(Collectors.toList());
+    }
 
+    @Transactional
+    public void delete (Long id){
+        Posts posts = postsRepository.findById(id).orElseThrow(()->new IllegalArgumentException("해당 게시글이 없습니다"));
+
+        postsRepository.delete(posts);
+    }
 
 
 }

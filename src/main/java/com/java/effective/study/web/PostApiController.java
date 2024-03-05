@@ -21,15 +21,20 @@ public class PostApiController {
 
 
     //조회
-    @GetMapping("/api/vi/posts/{id}")
+    @GetMapping("/api/v1/posts/{id}")
     public PostsResponseDto findById(@PathVariable Long id) {return postService.findById(id);}
 
     //수정
-    @PutMapping ("/api/vi/posts/{id}")
+    @PutMapping ("/api/v1/posts/{id}")
     public Long update(@PathVariable Long id , @RequestBody PostsUpdateResponseDto dto){
         return postService.update(id,dto);
     }
 
+    @DeleteMapping("/api/v1/posts/{id}")
+    public Long delete(@PathVariable Long id){
+        postService.delete(id);
+        return id;
+    }
 
 
 
