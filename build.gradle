@@ -26,7 +26,7 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok' // gradle 5이상에서는 annotationProcessor 추가되었음.
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 //	testImplementation 'org.springframework.security:spring-security-test'
-	testImplementation 'org.springframework.boot:spring-boot-starter-mustache'
+ 	implementation 'org.springframework.boot:spring-boot-starter-mustache'
 	runtimeOnly 'com.h2database:h2:2.1.214'
 
 }

@@ -12,4 +12,9 @@ public class IndexController {
         return "index"; // resources/templates/index를 화면에 return
     }
 
+    @GetMapping("/posts/save")
+    public String postsSave(){
+        return "posts-save";
+    }
+
 }
