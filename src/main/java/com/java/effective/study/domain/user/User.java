@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 
-@Getter
+    @Getter
     @NoArgsConstructor
     @Entity
     public class User extends BaseTimeEntity {
