@@ -2,9 +2,9 @@ package com.java.effective.study.config.auth;
 
 
 import com.java.effective.study.domain.user.Role;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.config.annotation.web.HttpSecurityBuilder;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
@@ -12,9 +12,10 @@ import org.springframework.security.web.SecurityFilterChain;
 //public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //}
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 @EnableWebSecurity
-public class SecurityConfig {
+@Configuration
+public class SecurityConfig  {
 
     private CustomOAuth2UserService  customOAuth2UserService;
 
@@ -31,7 +32,7 @@ public class SecurityConfig {
                     .logout().logoutSuccessUrl("/")
                .and()
                     .oauth2Login().userInfoEndpoint().userService(customOAuth2UserService);
-       return http.build();
+       return http.build(); //
     }
 
 }
