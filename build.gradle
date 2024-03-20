@@ -26,7 +26,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 	annotationProcessor 'org.projectlombok:lombok' // gradle 5이상에서는 annotationProcessor 추가되었음.
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-//	testImplementation 'org.springframework.security:spring-security-test'
+	testImplementation 'org.springframework.security:spring-security-test'
  	implementation 'org.springframework.boot:spring-boot-starter-mustache'
 	compileOnly('org.springframework.session:spring-session-jdbc')
 	runtimeOnly 'com.h2database:h2:2.1.214'

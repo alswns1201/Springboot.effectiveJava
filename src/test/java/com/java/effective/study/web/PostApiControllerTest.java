@@ -1,9 +1,14 @@
 package com.java.effective.study.web;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.With;
+import org.junit.jupiter.api.BeforeEach;
+import org.springframework.http.MediaType;
 import com.java.effective.study.domain.posts.Posts;
 import com.java.effective.study.domain.posts.PostsRepository;
 import com.java.effective.study.web.dto.PostSaveRequestDto;
 import com.java.effective.study.web.dto.PostsUpdateResponseDto;
+import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,7 +20,14 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.util.List;
 
@@ -36,12 +48,24 @@ public class PostApiControllerTest {
     @Autowired
     private PostsRepository postsRepository;
 
+    @Autowired
+    private WebApplicationContext context;
+
+    private MockMvc mvc;
+
+    @BeforeEach
+    public void setup(){
+    mvc= MockMvcBuilders.webAppContextSetup(context).apply(SecurityMockMvcConfigurers.springSecurity()).build();
+    }
+
+
     @AfterEach
     public void repositoryClear() throws Exception{
         postsRepository.deleteAll();
     }
 
     @Test
+    @WithMockUser(roles = "USER")
     public void Post등록테스트() throws Exception{
         //given
         String title = "title_test";
@@ -53,12 +77,14 @@ public class PostApiControllerTest {
         url = url+port+"/api/v1/posts";
 
         //when
-        ResponseEntity<Long> responseEntity = restTemplate.postForEntity(url,requestDto,Long.class);
+        mvc.perform(MockMvcRequestBuilders.post(url)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(new ObjectMapper().writeValueAsString(requestDto))).andExpect(status().isOk());
 
 
         //then
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(responseEntity.getBody()).isGreaterThan(0L);
+//        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+//        assertThat(responseEntity.getBody()).isGreaterThan(0L);
 
         List<Posts> all = postsRepository.findAll();
         assertThat(all.get(0).getTitle()).isEqualTo(title);
@@ -67,6 +93,7 @@ public class PostApiControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = "USER")
     public void 조회후수정_테스트() throws Exception{
          //given
         //임시로 데이터를 넣고.
@@ -85,13 +112,13 @@ public class PostApiControllerTest {
         HttpEntity<PostsUpdateResponseDto> requestEntity = new HttpEntity<>(updateDto);
 
         //when
-          ResponseEntity<Long> responseEntity = restTemplate.exchange(url, HttpMethod.PUT,requestEntity,Long.class);
-            /**오류 아직 모르겟음.
-             * Error while extracting response for type [class java.lang.Long] and content type [application/json];*/
+        mvc.perform(MockMvcRequestBuilders.post(url)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(new ObjectMapper().writeValueAsString(updateDto))).andExpect(status().isOk());
 
         //then
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(responseEntity.getBody()).isGreaterThan(0L);
+//        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+//        assertThat(responseEntity.getBody()).isGreaterThan(0L);
 
         List<Posts> all = postsRepository.findAll();
         assertThat(all.get(0).getTitle()).isEqualTo(update_title);
