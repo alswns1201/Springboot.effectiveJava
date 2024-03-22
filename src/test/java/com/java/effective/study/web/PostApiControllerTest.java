@@ -27,11 +27,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 @ExtendWith(SpringExtension.class)
@@ -109,16 +109,20 @@ public class PostApiControllerTest {
         String url ="http://localhost:";
         url = url+port+"/api/v1/posts/"+update_id;
 
-        HttpEntity<PostsUpdateResponseDto> requestEntity = new HttpEntity<>(updateDto);
-
-        //when
-        mvc.perform(MockMvcRequestBuilders.post(url)
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(new ObjectMapper().writeValueAsString(updateDto))).andExpect(status().isOk());
-
-        //then
+//        HttpEntity<PostsUpdateResponseDto> requestEntity = new HttpEntity<>(updateDto);
+//
+//        //when
+//        ResponseEntity<Long> responseEntity = restTemplate.exchange(url, HttpMethod.PUT,requestEntity,Long.class);
+//        /**오류 아직 모르겟음.
+//         * Error while extracting response for type [class java.lang.Long] and content type [application/json];*/
+//        //then
 //        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
 //        assertThat(responseEntity.getBody()).isGreaterThan(0L);
+        mvc.perform(MockMvcRequestBuilders.put(url)
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .content(new ObjectMapper().writeValueAsString(updateDto)))
+                .andExpect(status().isOk());
+
 
         List<Posts> all = postsRepository.findAll();
         assertThat(all.get(0).getTitle()).isEqualTo(update_title);

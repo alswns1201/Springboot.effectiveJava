@@ -42,6 +42,7 @@ public class HelloControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = "USER")
     public void helloDto롬복_테스트() throws Exception{
         String name= "test";
         int amount = 1000;
