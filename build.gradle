@@ -36,3 +36,7 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()	// springboot 기본이 jnuit5.
 }
+
+jar {
+	enabled = false	// 배포시 springboot2.5 이후부터는 plain 용 jar가 자동 생성됨을 방지.
+}
