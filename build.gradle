@@ -30,7 +30,7 @@ dependencies {
  	implementation 'org.springframework.boot:spring-boot-starter-mustache'
 	compileOnly('org.springframework.session:spring-session-jdbc')
 	runtimeOnly 'com.h2database:h2:2.1.214'
-	compileOnly("org.mariadb.jdbc:mariadb-java-client")
+	runtimeOnly("org.mariadb.jdbc:mariadb-java-client")
 
 }
 
