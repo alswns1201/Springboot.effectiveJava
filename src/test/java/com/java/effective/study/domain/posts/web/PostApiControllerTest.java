@@ -1,4 +1,4 @@
-package com.java.effective.study.web;
+package com.java.effective.study.domain.posts.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.With;

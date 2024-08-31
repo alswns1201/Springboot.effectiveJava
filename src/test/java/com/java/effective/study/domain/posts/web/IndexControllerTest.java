@@ -1,4 +1,4 @@
-package com.java.effective.study.web;
+package com.java.effective.study.domain.posts.web;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -1,6 +1,7 @@
-package com.java.effective.study.web;
+package com.java.effective.study.domain.posts.web;
 
 import com.java.effective.study.config.auth.SecurityConfig;
+import com.java.effective.study.web.HelloController;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,7 @@
-package com.java.effective.study.web.dto;
+package com.java.effective.study.domain.posts.web.dto;
 
 
+import com.java.effective.study.web.dto.HellloResponseDto;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.*; // assertj의 assertThat() 이용.
 
