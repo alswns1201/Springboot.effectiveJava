@@ -4,25 +4,41 @@ public class divison {
 
     static int answer = 0;
     static int[] arr ={0,2,3,8,9,11,13,15};
-    static  int div = 3;
+    static int[] visit = new int[arr.length+1];
+    static  int div = 4;
 
     public static void main(String[]args){
-        answer = division(arr,div,0,0);
-        System.out.println(answer);
+        int point[] = new int[div-1];
+        division(arr,div,0,point);
+//        System.out.println(answer);
     }
 
-    public static int division(int arr[],int div,int depth,int min){
-        if(depth == div-1)	// 분할 완료
+    public static int division(int arr[],int div,int depth,int[] point){
+;        if(depth == div-1)	// 분할 완료
         {
-            //max 중에 최소값
-//			min  = sum < min ? sum : min;
+            for(int a : point){
+                System.out.print(a+" ");
+
+            }
+
+            System.out.println();
+            return 0;
         }
 
-        for(int i = 0;i<arr.length;i++){
-            division(arr,div,depth+1,min);
+        for(int i = 0;i<=arr.length;i++){
+            if(visit[i]==1) {
+                continue;
+            }
+            // 한번 분할한 곳의 오른쪽 만 분할 가능.
+            if(depth > 0  && point[depth-1] > i ) {continue;}
+
+            point[depth] = i;
+            visit[i] = 1;
+            division(arr,div,depth+1,point);
+            visit[i] = 0;
         }
 
-        return min;
+        return 0;
     }
 
 }
