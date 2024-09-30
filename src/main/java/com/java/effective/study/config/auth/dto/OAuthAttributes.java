@@ -29,6 +29,9 @@ public class OAuthAttributes {
 
     // static 한 정적 메소드 사용시  네이버 카카오 구글 등 다양한 객체로 활용이 가능하다.
     public static OAuthAttributes of(String registrationId, String userNameAttributeName, Map<String, Object> attributes){
+        if("naver".equals(registrationId)){
+            return ofNaver("id",attributes);
+        }
         return ofGoogle(userNameAttributeName, attributes);
     }
 
@@ -42,6 +45,18 @@ public class OAuthAttributes {
                 .build();
     }
 
+    private static OAuthAttributes ofNaver(String userNameAttributeName, Map<String, Object> attributes) {
+        // 응답 받은 사용자의 정보를 Map형태로 변경.
+        Map<String, Object> response = (Map<String, Object>) attributes.get("response");
+        // 미리 정의한 속성으로 빌드.
+        return OAuthAttributes.builder()
+                .name((String) response.get("name"))
+                .email((String) response.get("email"))
+                .picture((String) response.get("profile_image"))
+                .attributes(response)
+                .nameAttributeKey(userNameAttributeName)
+                .build();
+    }
     public User toEntity(){
         return User.builder().name(name).email(email).picture(picture).role(Role.GUEST).build();
     }

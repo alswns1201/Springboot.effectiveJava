@@ -20,9 +20,17 @@ public class IndexController {
 //    private final HttpSession httpSession;
 
 
-
+    /**
+     *
+     * @param model
+     * @param SessionUser
+     * @return
+     */
     @GetMapping("/") // 초기 화면
     public String index(Model model ,@LoginUser  SessionUser SessionUser){
+
+        //@LoginUser 사용해서 자동으로 주입이되어, SessionUser user = (SessionUser) httpSession.getAttribute("user"); 사용 할 필요가 없다.
+
         model.addAttribute("posts",postService.findAllDesc());
 
         //로그인 관련 로직 추가 model에 정보를 담는다.

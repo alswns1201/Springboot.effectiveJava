@@ -8,7 +8,10 @@
        web/dto/ : PostsSaveRequestDto    
        web/ : PostsApiController  
 - 4장  src/main/resource/templates index.mustache, 
-  - web/ : indexController  
+  - web/ : indexController
+- 5장 Spring Security
+  - config/auth/dto/ : CustomOAuth2UserService, @LoginUser, LoginUserArgmentResolver, SecurityConfig
+  - config/auth/ : WebConfig
       
 
 # 구성 
@@ -16,10 +19,13 @@
 - service/ ~  : Service 구현  
 - web/dto/ ~: Entity에 대한 dto (requestDto,resposseDto) 
 - web/ ~ :  Controller 구성  
+- config/auth/dto ~ : OAuthService 구성 , @interface User 구성 , Resolver 구성 , SercurityConfig 구성
+- config/auth/WebConfig.java : WebmvcConfig 구성(resolver 적용)
 
 
 
-[부록]
+
+* * 부록 
 # 어노테이션
 - @SpringBootAplication : 내장 was 
 - @RestController : [@Controller에 @ResponseBody] 가 추가   Json 형태로 객체 데이터를 반환 
@@ -43,9 +49,7 @@
 - @EnableJpaAuditing 
     Auditing 활성화 
 
-
-
-
+  
 
 # ORM 
 -  Spring Data JPA -> Hibernate -> JPA
@@ -65,3 +69,30 @@
 - JPA의 영속성 컨텍스트 
 
 # 생성 수정 시간 JPA Auditing 
+
+
+# Spring Security OAuth2
+1) dependency
+- implementation 'org.springframework.boot:spring-boot-starter-security'
+- implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
+2) Config 구성
+- SecurityFilterChain
+- antMatchers
+- @EnableWebSecurity
+
+3) OAuth2 서비스 구현
+- OAuth2UserService<OAuth2UserRequest, OAuth2User> 상속
+- OAuth2UserRequest.getClientRegistration().getRegistrationId() : 구글/네이버 서비스 구분 코드
+
+4) OAuthAttributes 구현체 Entity
+
+5) @Interface를 이용한 SessionUser 적용 하여,
+-  httpSession.getAttribute("user")의 중복된 코드 처리.
+-  HandlerMethodArgumentResolver : 파라미터에 대한 변환/바인딩 
+  - 인터셉터 이후에 진행된다. 
+  - supportsParameter() , resolveArgument() 존재
+
+6) WebMvcConfigurer에서 만들어둔 Resolver를 등록. 
+- 스프링에서 사용되는 설정
+- addArgumentResolvers
