@@ -1,7 +1,7 @@
 # Springboot
 - 스프링부트와 AWS로 혼자 구현하는 웹 서비스 책 참고. 
 
-# 2장, 3장 
+# Chapter 
 - 2장  HelloController, web/dto/ :  HelloResponseDto  
 - 3장   domain/Posts  :  Posts,PostsRepository, BaseTimeEntity   
        service/posts/ :   PostsService 
